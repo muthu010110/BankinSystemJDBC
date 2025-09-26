@@ -12,6 +12,7 @@ try (Connection con=DriverManager.getConnection(url,user,password);)
 	            System.out.println("2. View Balance");
 	            System.out.println("3. Deposite");
 	            System.out.println("4.For Transaction");
+	            System.out.println("5.Add Interest");
 	            System.out.print("Enter your choice: ");
 	            int choice = sc.nextInt();
 	if(choice==1) {
@@ -95,10 +96,17 @@ try (Connection con=DriverManager.getConnection(url,user,password);)
 			e.printStackTrace();	
 		}	
 	}
-	else {
-		System.out.println("Account not found");
+	else if(choice==5){
+		System.out.println("Add interest to all account");
+		System.out.println("enter the interest percent: ");
+		int interest=sc.nextInt();
+		Statement st=con.createStatement();
+		st.addBatch("update account_table set account_balance=account_balance*"+interest);
+		int[] result=st.executeBatch();
+		System.out.println("Interest added to all account");
 	}		
 }
+
 catch(Exception e){
 	e.printStackTrace();
 }	
